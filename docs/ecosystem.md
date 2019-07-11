@@ -1,5 +1,5 @@
 ---
-search: english
+sidebar: auto
 ---
 
 # Ecosystem
@@ -37,6 +37,7 @@ Let's make DPlayer better, feel free to submit yours in [`Let me know!`](https:/
 - [DPlayer for Discuz!](https://coding.net/u/Click_04/p/video/git): Discuz!
 - [DPlayer for WordPress](https://github.com/BlueCocoa/DPlayer-WordPress): WordPress
 - [DPlayerHandle](https://github.com/kn007/DPlayerHandle): WordPress
+- [Selection](https://github.com/GreatSatan79/Selection): WordPress
 - [Vue-DPlayer](https://github.com/sinchang/vue-dplayer): Vue
 - [react-dplayer](https://github.com/hnsylitao/react-dplayer): React
 
@@ -47,6 +48,7 @@ Let's make DPlayer better, feel free to submit yours in [`Let me know!`](https:/
 
 ## Who use DPlayer?
 
+- [学习强国](https://itunes.apple.com/cn/app/%E5%AD%A6%E4%B9%A0%E5%BC%BA%E5%9B%BD/id1426355645?mt=8): “学习强国”学习平台精心打造的手机客户端
 - [小红书](https://www.xiaohongshu.com/): 中国最大的生活社区分享平台，同时也是发现全球好物的电商平台
 - [极客时间](https://time.geekbang.org/): 极客邦科技出品的一款 IT 内容知识服务 App
 - [嘀哩嘀哩](http://www.dilidili.wang/): 兴趣使然的无名小站（D站）

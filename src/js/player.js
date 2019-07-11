@@ -346,6 +346,9 @@ class DPlayer {
                         const hls = new Hls();
                         hls.loadSource(video.src);
                         hls.attachMedia(video);
+                        this.events.on('destroy', () => {
+                            hls.destroy();
+                        });
                     }
                     else {
                         this.notice('Error: Hls is not supported.');
@@ -358,7 +361,7 @@ class DPlayer {
 
             // https://github.com/Bilibili/flv.js
             case 'flv':
-                if (flvjs && flvjs.isSupported()) {
+                if (flvjs) {
                     if (flvjs.isSupported()) {
                         const flvPlayer = flvjs.createPlayer({
                             type: 'flv',
@@ -366,6 +369,11 @@ class DPlayer {
                         });
                         flvPlayer.attachMediaElement(video);
                         flvPlayer.load();
+                        this.events.on('destroy', () => {
+                            flvPlayer.unload();
+                            flvPlayer.detachMediaElement();
+                            flvPlayer.destroy();
+                        });
                     }
                     else {
                         this.notice('Error: flvjs is not supported.');
@@ -380,6 +388,9 @@ class DPlayer {
             case 'dash':
                 if (dashjs) {
                     dashjs.MediaPlayer().create().initialize(video, video.src, false);
+                    this.events.on('destroy', () => {
+                        dashjs.MediaPlayer().reset();
+                    });
                 }
                 else {
                     this.notice('Error: Can\'t find dashjs.');
@@ -400,6 +411,10 @@ class DPlayer {
                             }, () => {
                                 this.container.classList.remove('dplayer-loading');
                             });
+                        });
+                        this.events.on('destroy', () => {
+                            client.remove(torrentId);
+                            client.destroy();
                         });
                     }
                     else {
@@ -438,7 +453,7 @@ class DPlayer {
         this.on('error', () => {
             if (!this.video.error) {
                 // Not a video load error, may be poster load failed, see #307
-                return
+                return;
             }
             this.tran && this.notice && this.type !== 'webtorrent' & this.notice(this.tran('Video load failed'), -1);
         });
@@ -495,6 +510,7 @@ class DPlayer {
     }
 
     switchQuality (index) {
+        index = typeof index === 'string' ? parseInt(index) : index;
         if (this.qualityIndex === index || this.switchingQuality) {
             return;
         }
@@ -562,6 +578,9 @@ class DPlayer {
     resize () {
         if (this.danmaku) {
             this.danmaku.resize();
+        }
+        if (this.controller.thumbnails) {
+            this.controller.thumbnails.resize(160, this.video.videoHeight / this.video.videoWidth * 160, this.template.barWrap.offsetWidth);
         }
         this.events.trigger('resize');
     }
